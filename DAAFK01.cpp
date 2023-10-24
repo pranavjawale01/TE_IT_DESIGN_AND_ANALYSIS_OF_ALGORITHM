@@ -1,11 +1,12 @@
 // Write a program to implement Fractional knapsack using Greedy algorithm and 0/1 knapsack using dynamic programming. Show that Greedy strategy does not necessarily yield an optimal solution over a dynamic programming approach. 
 
 #include <iostream>
-
 using namespace std;
 
-struct item
+class item  //used class instead of struct
 {
+    public:
+
     int id;
     float weight;
     float profit;
@@ -20,21 +21,12 @@ void BubbleSort(item arr[], int n)
         {
             if (arr[j].density < arr[j + 1].density)
             {
-                float tempDensity = arr[j].density;
-                arr[j].density = arr[j + 1].density;
-                arr[j + 1].density = tempDensity;
+                //old: here you were swapping each attribute of struct temp
+                //change: instead swap the whole object.
+                item temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
 
-                float tempWeight = arr[j].weight;
-                arr[j].weight = arr[j + 1].weight;
-                arr[j + 1].weight = tempWeight;
-
-                float tempProfit = arr[j].profit;
-                arr[j].profit = arr[j + 1].profit;
-                arr[j + 1].profit = tempProfit;
-
-                int tempID = arr[j].id;
-                arr[j].id = arr[j + 1].id;
-                arr[j + 1].id = tempID;
             }
         }
     }
@@ -87,7 +79,8 @@ int main()
     cin >> KnapSackWeight;
     cout << "Enter total No. of items >> ";
     cin >> totalItem;
-    item arr[totalItem];
+    //use dynamic array of objects;
+    item* arr = new item[totalItem];
     for (int i = 0; i < totalItem; i++)
     {
         cout << "\nEnter the weight of item " << i + 1 << " >> ";
@@ -98,49 +91,50 @@ int main()
         arr[i].density = arr[i].profit / arr[i].weight;
     }
 
+    
     DisplayItems(arr, totalItem);
 
     FractionalKnapsack(arr, totalItem, KnapSackWeight);
-
+    //delete the dynamically allocated memory at end
+    delete[] arr;
     return 0;
 }
+//OUTPUT
+/*
+Enter the Weight of the Knapsack >> 16
+Enter total No. of items >> 6
 
-// OutPut >>
+Enter the weight of item 1 >> 6
+Enter the profit of item 1 >> 6
 
-// Enter the Weight of the Knapsack >> 16
-// Enter total No. of items >> 6
+Enter the weight of item 2 >> 10
+Enter the profit of item 2 >> 2
 
-// Enter the weight of item 1 >> 6
-// Enter the profit of item 1 >> 6
+Enter the weight of item 3 >> 3
+Enter the profit of item 3 >> 1
 
-// Enter the weight of item 2 >> 10
-// Enter the profit of item 2 >> 2
+Enter the weight of item 4 >> 5
+Enter the profit of item 4 >> 8
 
-// Enter the weight of item 3 >> 3
-// Enter the profit of item 3 >> 1
+Enter the weight of item 5 >> 1
+Enter the profit of item 5 >> 3
 
-// Enter the weight of item 4 >> 5
-// Enter the profit of item 4 >> 8
-
-// Enter the weight of item 5 >> 1
-// Enter the profit of item 5 >> 3
-
-// Enter the weight of item 6 >> 3
-// Enter the profit of item 6 >> 5
-// ID      Weight  Profit  Density
-// 1       6       	6       1
-// 2       10     	 2       0.2
-// 3       3       	1       0.333333
-// 4       5       	8       1.6
-// 5       1       	3       3
-// 6       3       	5       1.66667
-// Items selected
-// ID      Weight  Profit
-// 5       1      	3
-// 6       3       	5
-// 4       5       	8
-// 1       6       	6
-// 3       1       	0.333333
-// Total Weight in Knapsack >> 16
-// Total Profit >> 22.3333
-// PS P:\VsCode>
+Enter the weight of item 6 >> 3
+Enter the profit of item 6 >> 5
+ID      Weight  Profit  Density
+1       6       6       1
+2       10      2       0.2
+3       3       1       0.333333
+4       5       8       1.6
+5       1       3       3
+6       3       5       1.66667
+Items selected
+ID      Weight  Profit
+5       1       3
+6       3       5
+4       5       8
+1       6       6
+3       1       0.333333
+Total Weight in Knapsack >> 16
+Total Profit >> 22.3333
+*/
