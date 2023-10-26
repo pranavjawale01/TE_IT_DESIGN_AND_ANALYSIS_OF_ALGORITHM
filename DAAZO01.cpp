@@ -71,20 +71,30 @@ class zeroOneKnapSack
             }
         }
 
-        void selectItem()
+        int selectItem()
         {
             int i = totalItem;
             int j = bagWeight;
+            int totalWeight = 0;
+            int totalProfit = 0; // Initialize total profit to 0
+
             while (i > 0 && j > 0)
             {
                 if (table[i][j] != table[i - 1][j])
                 {
                     cout << "Item " << i << " selected\n";
+                    totalWeight += weight[i];
+                    totalProfit += profit[i]; // Add the profit of the selected item to totalProfit
                     j -= weight[i];
                 }
                 i--;
             }
+
+            cout << "\nTotal Weight of selected items: " << totalWeight << endl;
+            cout << "Total Profit of selected items: " << totalProfit << endl; // Print total profit
+            return totalWeight;
         }
+
 };
 
 int main()
@@ -147,3 +157,6 @@ int main()
 // Items selected:
 // Item 4 selected
 // Item 2 selected
+
+// Total Weight of selected items: 8
+// Total Profit of selected items: 8
