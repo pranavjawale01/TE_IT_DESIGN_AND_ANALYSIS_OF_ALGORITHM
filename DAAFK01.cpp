@@ -20,21 +20,9 @@ void BubbleSort(item arr[], int n)
         {
             if (arr[j].density < arr[j + 1].density)
             {
-                float tempDensity = arr[j].density;
-                arr[j].density = arr[j + 1].density;
-                arr[j + 1].density = tempDensity;
-
-                float tempWeight = arr[j].weight;
-                arr[j].weight = arr[j + 1].weight;
-                arr[j + 1].weight = tempWeight;
-
-                float tempProfit = arr[j].profit;
-                arr[j].profit = arr[j + 1].profit;
-                arr[j + 1].profit = tempProfit;
-
-                int tempID = arr[j].id;
-                arr[j].id = arr[j + 1].id;
-                arr[j + 1].id = tempID;
+                item temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
         }
     }
@@ -129,7 +117,7 @@ int main()
 // Enter the profit of item 6 >> 5
 // ID      Weight  Profit  Density
 // 1       6       	6       1
-// 2       10     	 2       0.2
+// 2       10     	2       0.2
 // 3       3       	1       0.333333
 // 4       5       	8       1.6
 // 5       1       	3       3
